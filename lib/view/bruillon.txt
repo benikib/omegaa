@@ -1,0 +1,45 @@
+Theme(
+        data: ThemeData(
+          inputDecorationTheme: InputDecorationTheme(
+            contentPadding: EdgeInsets.zero,
+            hintStyle: TextStyle(color: Color.fromRGBO(153, 153, 153, 1)),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Center(
+            child:TextField(
+              obscureText: this.estcache,
+              keyboardType: this.type,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+              onChanged: (value) {
+                fonctions!(value);
+                print(value);
+              },
+              decoration: InputDecoration(
+                fillColor: Colors.white24,
+                contentPadding: EdgeInsets.zero,
+                hintText: this.value,
+                border: InputBorder.none,
+              ),
+            )
+          ) ,
+        ),
+      )
+           BlockDate(date,(){
+                                showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2024),
+                                    lastDate: DateTime(2100, 12, 31),
+                                    initialDatePickerMode: DatePickerMode.year
+                                ).then((value) {
+                                  print(value);
+                                  setState(() {
+                                    String dates=ajoutzeroDate(value!.month.toString())+"-"+ajoutzeroDate(value.year.toString());
+                                    String hdate=formatMois(value!.month.toString())+" "+value!.year.toString();
+                                    Controler_inventaire(context).voirInventaireMois([dates,hdate]);
+                                  });
+                                });
