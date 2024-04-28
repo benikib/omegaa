@@ -85,6 +85,16 @@ class ModelMedicament {
     return val;
   }
 
+  static verifierDate() async{
+    String requette="select * from medicament inner join  medicamment_pharmacie on "+
+        " medicamment_pharmacie.id_medicament=medicament.id_medicament inner join pharmacie "+
+        " on pharmacie.id_pharmacie=medicamment_pharmacie.id_pharmacie "+
+        " where date_expi_medicament ='28-04 2024' and medicamment_pharmacie.id_pharmacie='$sess' ";
+    var res=await base.reccuperationDonnees(requette);
+    return (res.isEmpty)?false:true;
+
+  }
+
 
 
   static modifier(int id_medicament,int id_pharmacie, {dateExpiration,required List<dynamic>

@@ -3,7 +3,7 @@ import '../../controlers/espacePharmacie/controlerVente.dart';
 import '../../controlers/espacePharmacie/controler_panier.dart';
 import '../../session/Session.dart';
 import 'optionButtonNavigation.dart';
-
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class ButtonNavigationClient {
   List<List<dynamic>> modelClient=[
@@ -25,7 +25,10 @@ class ButtonNavigationClient {
     ["Vente", "imagess/logo voir.png",(c){
       ControlerVent(c).voirVenteJour();
     }],
-    ["Notification", "imagess/Alerte.png",(){}]
+    ["Notification", "imagess/Alerte.png",(v){
+    print("hzello");
+      FlutterRingtonePlayer.stop();
+    }]
   ];
 
   List<List<dynamic>> modelClient2=[

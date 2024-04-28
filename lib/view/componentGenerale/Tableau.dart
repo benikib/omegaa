@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 class Tableau {
 
   double widthParent=0;
@@ -11,8 +12,6 @@ class Tableau {
   List<List<dynamic>> contenue;
 
   Tableau(this.Entete,this.contenue,this.widthParent);
-
-
 
   lancer(){
 
@@ -66,9 +65,7 @@ class Tableau {
         listCont.add(
 
             Container(
-
                 width:(j==0)?widthCont+20:widthCont,
-
               child:Center(
                   child: Text(contenue[i][j],
                     style: TextStyle(
@@ -81,10 +78,17 @@ class Tableau {
         );
       }
 
-      listElement.add(Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children:listCont,
-      ));
+      listElement.add(InkWell(
+        onTap: (){
+          print("hello");
+
+        },
+        child: Row(
+
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children:listCont,
+        )) ,
+      ) ;
       if(i<contenue.length-1){
         listElement.add(Divider(thickness: 1,));
       }
@@ -108,10 +112,7 @@ class Tableau {
 
         listCont.add(
             Container(
-
-
                 width:(j==0)?widthCont+20:widthCont ,
-
                 child:Center(
                   child: Text(Entete[j],
 

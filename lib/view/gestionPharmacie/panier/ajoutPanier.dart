@@ -44,6 +44,9 @@ class PanierState extends State<AjoutPanier> {
 
   @override
   Widget build(BuildContext context) {
+    print("hello");
+    Controler_medicament(context).verifierDate();
+
     var long = MediaQuery.of(context).size.width;
     var larg = MediaQuery.of(context).size.height;
     double hauteur= MediaQuery.of(context).size.height;
@@ -221,14 +224,6 @@ class PanierState extends State<AjoutPanier> {
                 }
               },
                   InputRecherche(context, (x) {
-
-                    FlutterRingtonePlayer.play(
-                      android: AndroidSounds.notification,
-                      ios: IosSounds.glass,
-                      looping: true,
-                      volume: 1.0,
-                    );
-                    FlutterRingtonePlayer.stop();
 
 
                       }, long: long - 130, larg: 40)

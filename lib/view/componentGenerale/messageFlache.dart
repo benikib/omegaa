@@ -13,8 +13,7 @@ class MessageFlache{
   MessageFlache({required String message,temps=2, position=ToastGravity.BOTTOM}){
     this.message=message;
     lancer();
-  }g
-
+  }
 
   lancer(){
     print("fluttertoas");
