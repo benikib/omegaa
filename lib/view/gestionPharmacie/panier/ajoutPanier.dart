@@ -230,7 +230,6 @@ class PanierState extends State<AjoutPanier> {
                     );
                     FlutterRingtonePlayer.stop();
 
-                        
 
                       }, long: long - 130, larg: 40)
                           .lancer())
