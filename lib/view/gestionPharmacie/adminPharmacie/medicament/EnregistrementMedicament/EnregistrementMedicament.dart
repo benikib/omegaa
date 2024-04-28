@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omegaa/elper/formatDate.dart';
+import 'package:omegaa/models/modelMedicament.dart';
+import 'package:omegaa/session/Session.dart';
+import 'package:omegaa/view/componentGenerale/alertAjoutElement.dart';
+import 'package:omegaa/view/componentGenerale/alerteActionUnique.dart';
 import '../../../../../controlers/espacePharmacie/admin/controler_medicament.dart';
 import '../../../../componentGenerale/ButtonCostom.dart';
 import '../../../../componentGenerale/Combobox.dart';
@@ -31,24 +35,31 @@ Future<void> verifification ( context,medicamentNom,
 
 class EnregistrementMedicament extends StatefulWidget {
   static  var nom_medicament,forme_medicament,quantite,doses,prixs,unite="mg";
+  var tampoProduit;
 
+  EnregistrementMedicament(this.tampoProduit);
 
   @override
-  State<EnregistrementMedicament> createState() => EnregistrementMedicamentState();
+  State<EnregistrementMedicament> createState() => EnregistrementMedicamentState(this.tampoProduit);
 
 }
 
 class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
   Color appBarColor = Color.fromRGBO(50, 190, 166, 1);
-  var tampoProduit = ["forme gualelique", "Comprimer", "cipo"];
+  var tampoProduits = ["forme gualelique", "Comprimer", "cipo"];
+  List<ModelMedicament> tampoProduit=[];
   var dose =["mg","poids","ml"];
   var nomProduit="",doseMedoc="",prix="",unite="mg";
   String msg="";
+
   late double longElement;
   String dateExp="00-00-0000";
   bool switchValue = false;
   var d=DateTime.now();
+  var indexParcour=0;
+  int qte_paquet=0;
 
+  EnregistrementMedicamentState(this.tampoProduit);
 
   @override
   Widget build(BuildContext context) {
@@ -188,24 +199,55 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
 
 
         ButtonCostom("Enregistrer",Color.fromRGBO(50, 190, 166, 1),(){
-          String medicamentNom=EnregistrementMedicament.nom_medicament ?? "";
-          String medicamentForm=EnregistrementMedicament.forme_medicament ?? "";
-          String medicamentPrix=EnregistrementMedicament.prixs ?? "";
-          String medicamentDose=EnregistrementMedicament.doses ?? "";
-          String medicamentUni=EnregistrementMedicament.unite ?? "";
+    String medicamentNom=EnregistrementMedicament.nom_medicament ?? "";
+    String medicamentForm=EnregistrementMedicament.forme_medicament ?? "";
+    String medicamentPrix=EnregistrementMedicament.prixs ?? "";
+    String medicamentDose=EnregistrementMedicament.doses ?? "";
+    String medicamentUni=EnregistrementMedicament.unite ?? "";
+    String quantite =EnregistrementMedicament.quantite ?? "";
+
+    if(medicamentNom=="" || medicamentPrix =="" ||  medicamentDose==""){
+      MessageFlache(message: "Entrer tous les champs si possible");
 
 
-          if(medicamentNom=="" || medicamentPrix =="" ||  medicamentDose==""){
-            MessageFlache(message: "Entrer tous les champs si possible");
+    }else{
+      verifification ( context,medicamentNom,
+          medicamentForm, medicamentPrix,
+          medicamentDose,   medicamentUni);
+      if(quantite==0 || dateExp=="00-00-0000"){
+        AlertActionUnique(
+                (){
+              Controler_medicament(context).voirStock();
+            },context,"Entrez la quantite ou la date valide","Message"
+        ).lancer();
+      }
 
-          }else{
-            verifification ( context,medicamentNom,
-                medicamentForm, medicamentPrix,
-                medicamentDose,   medicamentUni);
+      else if (tampoProduit[indexParcour].quantite_paquet==0 && switchValue==true){
+        AlertAjoutElement(nomClient:(e){
+          qte_paquet=int.parse(e);
+        },avecTextFiel: true,
+                (){
+              Controler_medicament(context).modifier(quantite_paquet:qte_paquet,dateExp, [quantite,switchValue],
+                  Session.id_connect, this.tampoProduit[indexParcour].id);
+            },
+                (){
+              Controler_medicament(context).voirStock();
 
-          }
+            },
+            context,
+            "Entrer le nombre de pièces par paquet",
+            "Message"
+        ).lancer();
+      }else{
+        Controler_medicament(context).modifier(dateExp,[quantite,switchValue],
+            Session.id_connect, this.tampoProduit[indexParcour].id,quantite_paquet:tampoProduit[indexParcour].quantite_paquet );
+      }
+    }
 
-        },taille: 14,mt: 6).lancer(),
+
+
+
+  },taille: 14,mt: 6).lancer(),
 
       ]).lancer();
   }
