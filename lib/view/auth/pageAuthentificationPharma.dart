@@ -103,7 +103,7 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
                         attente=false;
                         MessageFlache(message: "Mot de passe incorrecte");
                         //efface
-                        navigation(context,pageAccueille());
+
                       });
 
 

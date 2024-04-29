@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:omegaa/elper/formatDate.dart';
+import 'package:omegaa/models/modelMedicament.dart';
+import 'package:omegaa/session/Session.dart';
+import 'package:omegaa/view/componentGenerale/alertAjoutElement.dart';
+import 'package:omegaa/view/componentGenerale/alerteActionUnique.dart';
 import '../../../../../controlers/espacePharmacie/admin/controler_medicament.dart';
 import '../../../../componentGenerale/ButtonCostom.dart';
 import '../../../../componentGenerale/Combobox.dart';
@@ -18,7 +22,7 @@ import 'composant/TextEnr.dart';
 
 Future<void> verifification ( context,medicamentNom,
     medicamentForm, medicamentPrix,
-    medicamentDose,   medicamentUni) async {
+    medicamentDose,   medicamentUni, medicamentquantite,dataExp) async {
 
  String msg = await  Controler_medicament(context).Enregistrer(medicamentNom,
       medicamentForm, medicamentPrix,
@@ -30,8 +34,10 @@ Future<void> verifification ( context,medicamentNom,
 }
 
 class EnregistrementMedicament extends StatefulWidget {
-  static  var nom_medicament,forme_medicament,quantite,doses,prixs,unite="mg";
+  static  var nom_medicament,forme_medicament,quantite="",doses,prixs,unite="mg";
+  var tampoProduit;
 
+  EnregistrementMedicament();
 
   @override
   State<EnregistrementMedicament> createState() => EnregistrementMedicamentState();
@@ -40,15 +46,20 @@ class EnregistrementMedicament extends StatefulWidget {
 
 class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
   Color appBarColor = Color.fromRGBO(50, 190, 166, 1);
-  var tampoProduit = ["forme gualelique", "Comprimer", "cipo"];
+  var tampoProduits = ["forme gualelique", "Comprimer", "cipo"];
+
   var dose =["mg","poids","ml"];
   var nomProduit="",doseMedoc="",prix="",unite="mg";
   String msg="";
+
   late double longElement;
   String dateExp="00-00-0000";
   bool switchValue = false;
   var d=DateTime.now();
+  var indexParcour=0;
+  int qte_paquet=0;
 
+  EnregistrementMedicamentState();
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +180,7 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
             ],
           ),
         ]).lancer(),
-        if( EnregistrementMedicament.quantite!=null)
+        if( EnregistrementMedicament.quantite!="")
         LigneElement([
           BlockDate(long:longElement, dateExp,(){
             showDatePicker(
@@ -188,24 +199,28 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
 
 
         ButtonCostom("Enregistrer",Color.fromRGBO(50, 190, 166, 1),(){
-          String medicamentNom=EnregistrementMedicament.nom_medicament ?? "";
-          String medicamentForm=EnregistrementMedicament.forme_medicament ?? "";
-          String medicamentPrix=EnregistrementMedicament.prixs ?? "";
-          String medicamentDose=EnregistrementMedicament.doses ?? "";
-          String medicamentUni=EnregistrementMedicament.unite ?? "";
+    String medicamentNom=EnregistrementMedicament.nom_medicament ?? "";
+    String medicamentForm=EnregistrementMedicament.forme_medicament ?? "";
+    String medicamentPrix=EnregistrementMedicament.prixs ?? "";
+    String medicamentDose=EnregistrementMedicament.doses ?? "";
+    String medicamentUni=EnregistrementMedicament.unite ?? "";
+    String medicamentquantite =EnregistrementMedicament.quantite ?? "";
+
+    if(medicamentNom=="" || medicamentPrix =="" ||  medicamentDose==""){
+      MessageFlache(message: "Entrer tous les champs si possible");
 
 
-          if(medicamentNom=="" || medicamentPrix =="" ||  medicamentDose==""){
-            MessageFlache(message: "Entrer tous les champs si possible");
+    }else{
+      verifification ( context,medicamentNom,
+          medicamentForm, medicamentPrix,
+          medicamentDose,   medicamentUni,medicamentquantite,dateExp);
 
-          }else{
-            verifification ( context,medicamentNom,
-                medicamentForm, medicamentPrix,
-                medicamentDose,   medicamentUni);
+    }
 
-          }
 
-        },taille: 14,mt: 6).lancer(),
+
+
+  },taille: 14,mt: 6).lancer(),
 
       ]).lancer();
   }

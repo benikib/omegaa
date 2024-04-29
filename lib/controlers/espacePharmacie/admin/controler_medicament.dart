@@ -5,7 +5,7 @@ import '../../../view/gestionPharmacie/adminPharmacie/medicament/EnregistrementM
 import '../../../view/gestionPharmacie/adminPharmacie/medicament/stockProduit.dart';
 
 class Controler_medicament{
-
+  List<ModelMedicament> tampoProduit=[];
   var context;
   Controler_medicament(this.context);
 
