@@ -12,16 +12,34 @@ class Controler_medicament{
   ajouter(){
     navigation(context,EnregistrementMedicament());
   }
-  Future<String> Enregistrer(nom, forme, prix, dose, unite) async{
+  Future<String> Enregistrer(nom, forme, prix, dose, unite,medicamentquantite,dateExp) async{
+    int verificationProd=0;
 
-      int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite).ajouter();
-      if(verificationProd==0){
+if (medicamentquantite!="" && dateExp!="00-00-0000"){
 
-        return "le produit existe deja ou le champ est vide ";
-      }else{
-        ajouter();
-        return  "produit  "+nom+forme+dose+unite+"ajouter avec succes";
-      }
+
+  int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite,quantite_detail: medicamentquantite,dateExpiration: dateExp).ajouter();
+  if(verificationProd==0){
+
+    return "le produit existe deja ou le champ est vide ";
+  }else{
+    ajouter();
+    return  "produit  "+nom+forme+dose+unite+"ajouter avec succes";
+  }
+}
+else{
+  print("0000000000000000000000000000000000000000000000000000000000");
+  int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite).ajouter();
+  if(verificationProd==0){
+
+    return "le produit existe deja ou le champ est vide ";
+  }else{
+    ajouter();
+    return  "produit  "+nom+forme+dose+unite+"ajouter avec succes";
+  }
+}
+
+
 
   }
 

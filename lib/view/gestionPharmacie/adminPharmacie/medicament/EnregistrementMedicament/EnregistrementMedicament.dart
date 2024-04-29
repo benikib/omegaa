@@ -22,11 +22,14 @@ import 'composant/TextEnr.dart';
 
 Future<void> verifification ( context,medicamentNom,
     medicamentForm, medicamentPrix,
-    medicamentDose,   medicamentUni, medicamentquantite,dataExp) async {
+    medicamentDose,   medicamentUni, medicamentquantite,dateExp,switchValue) async {
+
+
+
 
  String msg = await  Controler_medicament(context).Enregistrer(medicamentNom,
       medicamentForm, medicamentPrix,
-      medicamentDose,   medicamentUni
+      medicamentDose,   medicamentUni,medicamentquantite,dateExp
   ) ;
 
  MessageFlache(message: msg);
@@ -213,7 +216,7 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
     }else{
       verifification ( context,medicamentNom,
           medicamentForm, medicamentPrix,
-          medicamentDose,   medicamentUni,medicamentquantite,dateExp);
+          medicamentDose,   medicamentUni,medicamentquantite,dateExp,switchValue);
 
     }
 
