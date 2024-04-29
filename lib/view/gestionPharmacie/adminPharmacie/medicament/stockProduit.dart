@@ -93,7 +93,6 @@ class StockProduitState extends State<StockProduit> {
                       long:longElement+10 ,large: 40,
                       fonctions:(a,pos){
                         setState(() {
-
                           indexParcour=pos;
                           posCombo=indexParcour;
                         });

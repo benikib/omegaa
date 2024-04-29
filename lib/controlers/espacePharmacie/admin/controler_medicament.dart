@@ -32,10 +32,15 @@ class Controler_medicament{
     navigation(context, StockProduit(tab));
   }
 
+
+
+
   modifier(dateExpiration, quantite,id_pharmacie,id_medicament,{quantite_paquet=0}) async {
     ModelMedicament.modifier(id_medicament, id_pharmacie,dateExpiration: dateExpiration,quantite: quantite,quantite_paquet:quantite_paquet );
     navigation(context, StockProduit(await ModelMedicament.afficher()));
   }
+
+
 
   rechercherVendre(String medoc) async{
 

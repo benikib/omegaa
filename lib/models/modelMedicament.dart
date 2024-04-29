@@ -18,7 +18,6 @@ class ModelMedicament {
   int quantite_paquet;
  static var sess=Session.id_connect;
 
-
   String nomTable="medicament";
   static BaseDeDonnee base=new  BaseDeDonnee();
 
@@ -68,6 +67,7 @@ class ModelMedicament {
         });
 
       }else{
+
         base.ajoutDonnees("medicamment_pharmacie",{"id_medicament":resultTest2[0]["id_medicament"],
           "id_pharmacie":sess,"prix_medicament":this.prix,
           "quantite_detail":this.quantite_detail,
@@ -94,8 +94,6 @@ class ModelMedicament {
     return (res.isEmpty)?false:true;
 
   }
-
-
 
   static modifier(int id_medicament,int id_pharmacie, {dateExpiration,required List<dynamic>
  quantite,quantite_paquet=0}){

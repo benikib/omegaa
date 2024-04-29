@@ -23,13 +23,11 @@ import '../adminPharmacie/AcceuilAdmin.dart';
 
 class AjoutPanier extends StatefulWidget {
   var tampoProduit;
-
   AjoutPanier(this.tampoProduit);
-
   @override
   State<AjoutPanier> createState() => PanierState(this.tampoProduit);
-}
 
+}
 class PanierState extends State<AjoutPanier> {
   bool switchValue = false;
   int posCombo=0;
@@ -44,7 +42,6 @@ class PanierState extends State<AjoutPanier> {
 
   @override
   Widget build(BuildContext context) {
-    print("hello");
     Controler_medicament(context).verifierDate();
 
     var long = MediaQuery.of(context).size.width;
@@ -75,6 +72,7 @@ class PanierState extends State<AjoutPanier> {
                   (quantite * int.parse(tampoProduit[indexParcour].prix!))
                       .toString()
                 ];
+
                 AlertAjoutElement(
                         nomClient: (e) {
                           nom = e;
@@ -225,7 +223,6 @@ class PanierState extends State<AjoutPanier> {
               },
                   InputRecherche(context, (x) {
 
-
                       }, long: long - 130, larg: 40)
                           .lancer())
                   .createBlock(MediaQuery.of(context).size.width))
@@ -246,7 +243,6 @@ class PanierState extends State<AjoutPanier> {
       padding: EdgeInsets.only(top: 8, bottom: 8),
     );
   }
-
 
 
 
