@@ -84,7 +84,10 @@ class StockProduitState extends State<StockProduit> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children:[
-              InputRecherche(larg:40,long: 270,context,(){}).lancer(),
+              InputRecherche(larg:40,long: 270,context,(x){
+                Controler_medicament(context).rechercherStock(x);
+
+              }).lancer(),
               blockStock(
                   Combobox(
                       long:longElement+10 ,large: 40,

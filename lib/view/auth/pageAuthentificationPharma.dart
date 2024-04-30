@@ -46,7 +46,6 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
       ).lancer(),
     ];
 
-
     var h=MediaQuery.of(context).size;
     double largInp=h.width-18;
     var longInp=55;
@@ -78,7 +77,7 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
                         value: "Entrez le mot de passe ",
                         couleur:colorInput
                     ).lancer(),
-                  [ColorfulCircularProgressIndicator(colors: [Colors.blue,Colors.green]),
+                  [
 
                     Elemt("Création du compte",(){
                       AlertDialogue(
@@ -90,21 +89,30 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
                     }),
                     Elemt("Mot de passe oublier ?",(){})
                   ]
-
                 ),
-                ButtonCostom("Connexion",colorButton,()async{
+                ButtonCostom("Connexion",attente:(attente==true)?true:false,colorButton,()async{
+                  setState(()async
+                  {
+                    attente=true;
+                    int v= await controllerAuth(context).connecter( pageAuthentificationPharma.login, pageAuthentificationPharma.password);
 
-                  int v= await controllerAuth(context).connecter( pageAuthentificationPharma.login,
-                      pageAuthentificationPharma.password);
-                if(v==0){
-                  setState(() {
-                    colorConnect=Colors.red;
+                    if(v==0){
+                      setState(() {
+                        colorConnect=Colors.red;
+                        attente=false;
+                        MessageFlache(message: "Mot de passe incorrecte");
+                      });
+
+
+                    }else{
+                      MessageFlache(message: "Vous êtes connecté");
+                    }
                   });
-                  MessageFlache(message: "Mot de passe incorrecte");
 
-                }else{
-                  MessageFlache(message: "Vous êtes connecté");
-                }
+
+
+
+
 
                 }).lancer(),
 

@@ -36,6 +36,7 @@ dependencies:
   colorful_circular_progress_indicator: ^0.0.2
   flutter_regex: ^0.0.3
 
+
 flutter_native_splash:
   color: '#32BE9C'
   image: imagess/logoOmega.png

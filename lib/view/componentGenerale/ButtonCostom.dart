@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:colorful_circular_progress_indicator/colorful_circular_progress_indicator.dart';
 class ButtonCostom{
 
   String text;
+
+
 
   Color font;
   var mt,mb,ml,mr;
   Function  fonction;
   var taille;
   double rad;
+  var attente=false;
 
-  ButtonCostom(this.text,this.font,this.fonction,{this.taille=10,this.mt=0,this.mb=0,this.ml=0,this.mr=0,this.rad=5});
+  ButtonCostom(this.text,this.font,this.fonction,{this.attente=false,this.taille=10,this.mt=0,this.mb=0,this.ml=0,this.mr=0,this.rad=5});
   lancer(){
     return  InkWell(
       child:Container(
@@ -20,12 +24,12 @@ class ButtonCostom{
               right:mr.toDouble()
           ),
           child:Padding(
-            child:Text(text,
+            child:(attente==false)? Text(text,
               style: TextStyle(
                   fontSize: 17,
                   color: Colors.white
               ),
-            ) ,
+            ):ColorfulCircularProgressIndicator(colors: [Colors.blue,Colors.green]) ,
             padding: EdgeInsets.only(
                 top:taille.toDouble(),bottom: taille.toDouble(),left: (taille+23).toDouble(),right:(taille+23).toDouble()
             ),
