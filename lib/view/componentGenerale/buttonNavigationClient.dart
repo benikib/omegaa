@@ -6,7 +6,8 @@ import 'optionButtonNavigation.dart';
 
 
 class ButtonNavigationClient {
-  List<List<dynamic>> modelClient=[
+  List<List<dynamic>> modelClient=[ 
+    
     ["Reservation", "imagess/logoArgentNoSelect.png",(){}],
     ["Notification", "imagess/Alerte.png",(){}],
     ["Profil", "imagess/Personne2.png",(){}]
@@ -16,16 +17,14 @@ class ButtonNavigationClient {
     ["Vendre", "imagess/logoArgent.png",(c){
       Controler_panier(c).ajouterAuPanier();
     }],
-
     ["Panier", "imagess/logoPnier.png",(c){
       Controler_panier(c).voirPanier();
+
     },Session.increPanier],
-
-
     ["Vente", "imagess/logo voir.png",(c){
       ControlerVent(c).voirVenteJour();
     }],
-    ["Notification", "imagess/Alerte.png",(){}]
+    ["Reservation", "imagess/Alerte.png",(){}]
   ];
 
   List<List<dynamic>> modelClient2=[
@@ -55,10 +54,11 @@ class ButtonNavigationClient {
 
     List<Widget> elementRec=[];
     for(int i=0; i<element.length; i++){
-      if(i==1 ||(i==2 && model==3)|| i==3){
+      if(i==1 ||(i==2 && model==3)){
         elementRec.add(OptionNavigation(valeur:Session.increPanier.toString(),panier:"1",element[i][0],element[i][1]).creerOption(action: (){
           element[i][2](context);
         },context:context));
+
       }
       else{
         elementRec.add(OptionNavigation(valeur:"0",panier:"0",element[i][0],element[i][1]).creerOption(action: (){

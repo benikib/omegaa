@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 blockInt(Widget element1,Widget element2,List<Widget> elementSup){
   return
+
     Container(
+
     height: 180,
     child:Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

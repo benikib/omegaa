@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 class InputRecherche{
 
   var context;
-  String textArecchercher="";
-
   Function f;
   String valeurInterne;
   double long,larg;
@@ -32,7 +30,9 @@ class InputRecherche{
           focusNode: focus,
           controller: TextEditingController(text:valeurInterne ),
           onChanged: (z){
-            textArecchercher=z;
+
+            this.f(z);
+
           },
           keyboardType:TextInputType.name,
           style: TextStyle(
@@ -41,10 +41,7 @@ class InputRecherche{
             // height: 1.0
           ),
           decoration: InputDecoration(
-            prefixIcon: InkWell(child:Icon(Icons.search),onTap: (){
-
-              this.f(textArecchercher);
-            },),
+            prefixIcon: Icon(Icons.search),
             hintText:"Recheche...",
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(50))
