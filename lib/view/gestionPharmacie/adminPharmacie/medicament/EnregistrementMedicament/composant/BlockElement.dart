@@ -21,7 +21,7 @@ class BlockElement{
     ),) ,
     Container(
 
-    height: 350,
+    height: 370,
     child: Column(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children:this.elements

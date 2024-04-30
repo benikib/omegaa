@@ -54,10 +54,15 @@ class ModelMedicament {
           " unite='$unite' and dose='$dose' and forme='$forme'";
       var resultTest2=await base.reccuperationDonnees(requetteTest2);
       if(resultTest2.length==0){
+
         val= await base.ajoutDonnees(this.nomTable,{"nom_medicament":this.nom,
           "unite":this.unite,"dose":this.dose,
           "forme":this.forme
+
+
         });
+
+
         base.ajoutDonnees("medicamment_pharmacie",{"id_medicament":val,
           "id_pharmacie":sess,"prix_medicament":this.prix,
           "quantite_detail":this.quantite_detail,

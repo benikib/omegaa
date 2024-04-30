@@ -7,23 +7,42 @@ import '../../../view/gestionPharmacie/panier/ajoutPanier.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class Controler_medicament{
-
+  List<ModelMedicament> tampoProduit=[];
   var context;
   Controler_medicament(this.context);
 
   ajouter(){
     navigation(context,EnregistrementMedicament());
   }
-  Future<String> Enregistrer(nom, forme, prix, dose, unite) async{
+  Future<String> Enregistrer(nom, forme, prix, dose, unite,medicamentquantite,dateExp) async{
+    int verificationProd=0;
 
-      int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite).ajouter();
-      if(verificationProd==0){
 
-        return "le produit existe deja ou le champ est vide ";
-      }else{
-        ajouter();
-        return  "produit  "+nom+forme+dose+unite+"ajouter avec succes";
-      }
+if (medicamentquantite!="" && dateExp!="00-00-0000"){
+
+  int quantite_detail = int.parse(medicamentquantite);
+  int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite,quantite_detail: quantite_detail,dateExpiration: dateExp).ajouter();
+  if(verificationProd==0){
+
+    return "le produit existe deja ou le champ est vide ";
+  }else{
+    ajouter();
+    return  "produit  "+nom+forme+dose+unite+"ajouter avec succes";
+  }
+}
+else{
+  print("0000000000000000000000000000000000000000000000000000000000");
+  int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite).ajouter();
+  if(verificationProd==0){
+
+    return "le produit existe deja ou le champ est vide ";
+  }else{
+    ajouter();
+    return  "produit  "+nom+forme+dose+unite+"ajouter avec succes";
+  }
+}
+
+
 
   }
 

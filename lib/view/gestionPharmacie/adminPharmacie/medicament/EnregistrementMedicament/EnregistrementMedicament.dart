@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:omegaa/elper/formatDate.dart';
+import 'package:omegaa/models/modelMedicament.dart';
+import 'package:omegaa/session/Session.dart';
+import 'package:omegaa/view/componentGenerale/alertAjoutElement.dart';
+import 'package:omegaa/view/componentGenerale/alerteActionUnique.dart';
 import '../../../../../controlers/espacePharmacie/admin/controler_medicament.dart';
 import '../../../../componentGenerale/ButtonCostom.dart';
 import '../../../../componentGenerale/Combobox.dart';
 import '../../../../componentGenerale/InputCostom.dart';
+
+
+import '../../../../componentGenerale/blockDate.dart';
 import '../../../../componentGenerale/entete.dart';
 import '../../../../componentGenerale/messageFlache.dart';
 import '../../../../leyouts/base.dart';
@@ -14,19 +22,26 @@ import 'composant/TextEnr.dart';
 
 Future<void> verifification ( context,medicamentNom,
     medicamentForm, medicamentPrix,
-    medicamentDose,   medicamentUni) async {
+    medicamentDose,   medicamentUni, medicamentquantite,dateExp,switchValue) async {
 
- String msg = await  Controler_medicament(context).Enregistrer(medicamentNom,
+
+
+
+  String msg = await  Controler_medicament(context).Enregistrer(medicamentNom,
       medicamentForm, medicamentPrix,
-      medicamentDose,   medicamentUni
+      medicamentDose,   medicamentUni,medicamentquantite,dateExp
   ) ;
 
- MessageFlache(message: msg);
+  MessageFlache(message: msg);
 
 }
 
 class EnregistrementMedicament extends StatefulWidget {
-  static  var nom_medicament,forme_medicament,doses,prixs,unite="mg";
+
+  static  var nom_medicament,forme_medicament,quantite="",doses,prixs,unite="mg";
+  var tampoProduit;
+
+  EnregistrementMedicament();
 
   @override
   State<EnregistrementMedicament> createState() => EnregistrementMedicamentState();
@@ -35,13 +50,28 @@ class EnregistrementMedicament extends StatefulWidget {
 
 class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
   Color appBarColor = Color.fromRGBO(50, 190, 166, 1);
-  var tampoProduit = ["forme gualelique", "Comprimer", "cipo"];
+  var tampoProduits = ["forme gualelique", "Comprimer", "cipo"];
+
+
+
   var dose =["mg","poids","ml"];
   var nomProduit="",doseMedoc="",prix="",unite="mg";
   String msg="";
 
+  late double longElement;
+  String dateExp="00-00-0000";
+  bool switchValue = false;
+  var d=DateTime.now();
+  var indexParcour=0;
+  int qte_paquet=0;
+
+
+  EnregistrementMedicamentState();
+
+
   @override
   Widget build(BuildContext context) {
+    longElement=MediaQuery.of(context).size.width-190;
     return Scaffold(
       appBar: Entete(
           flecheR: true,
@@ -95,6 +125,7 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
           ).lancer(),
           IconEnr(width, Icons.add)
         ]).lancer(),
+
     LigneElement([
       InputCostom(type:TextInputType.number,elevation:5,long: width-140,lar: 50,
           fonctions: (v){
@@ -128,6 +159,50 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
           TextEnr("Fc",width-330)
         ]).lancer(),
 
+        LigneElement([
+          InputCostom(type:TextInputType.number,elevation:5,long: width-190,lar: 50,
+              fonctions: (v){
+                EnregistrementMedicament.quantite=v;
+              },
+              value: "Quantite"
+          ).lancer(),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text((switchValue==false)?"En pièce":"En paquet"),
+              Switch(
+                  activeColor: Color.fromRGBO(50, 190, 166, 1),
+                  inactiveTrackColor: Colors.grey,
+                  inactiveThumbColor: Colors.black,
+                  value: switchValue,
+                  onChanged: ((bool){
+                    setState(() {
+                      switchValue = bool;
+                    });
+                  }))
+            ],
+          ),
+        ]).lancer(),
+        if( EnregistrementMedicament.quantite!="")
+
+          LigneElement([
+            BlockDate(long:longElement, dateExp,(){
+              showDatePicker(
+                context: context,
+                initialDate: DateTime(d.year, d.month, d.day), // Mettre à jour la date initiale
+                firstDate: DateTime(2022),
+                lastDate: DateTime(20100, 12, 31),
+              ).then((value) {
+                setState(() {
+                  dateExp=ajoutzeroDate(value!.day.toString())+"-"+ajoutzeroDate(value!.month.toString())+" "+value!.year.toString();
+                });
+              });
+            },large: 30).lancer(),
+
+          ]).lancer(),
+
+
         ButtonCostom("Enregistrer",Color.fromRGBO(50, 190, 166, 1),(){
           String medicamentNom=EnregistrementMedicament.nom_medicament ?? "";
           String medicamentForm=EnregistrementMedicament.forme_medicament ?? "";
@@ -135,20 +210,31 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
           String medicamentDose=EnregistrementMedicament.doses ?? "";
           String medicamentUni=EnregistrementMedicament.unite ?? "";
 
+          String medicamentquantite =EnregistrementMedicament.quantite ??  "";
+
+
 
           if(medicamentNom=="" || medicamentPrix =="" ||  medicamentDose==""){
-<<<<<<< HEAD
-            MessageFlache(message: " veillez Entrer tous les champs si possible");
-=======
-            MessageFlache(message: "Entrer tous les champs si possible");
 
->>>>>>> 70d15b3304d423e159cdf70414a8c5d72cb2ba70
-          }else{
+
+        }else{
             verifification ( context,medicamentNom,
                 medicamentForm, medicamentPrix,
-                medicamentDose,   medicamentUni);
+
+                medicamentDose,   medicamentUni,medicamentquantite,dateExp,switchValue);
 
           }
+
+
+
+
+
+
+
+
+
+
+
 
         },taille: 14,mt: 6).lancer(),
 

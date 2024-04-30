@@ -12,6 +12,7 @@ class LigneElement{
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children:this.elements,
+
     );
 
   }

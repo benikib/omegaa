@@ -12,6 +12,7 @@ import '../componentGenerale/InputCostom.dart';
 import '../componentGenerale/dialogue.dart';
 import '../componentGenerale/entete.dart';
 import '../componentGenerale/messageFlache.dart';
+import '../gestionPharmacie/adminPharmacie/AcceuilAdmin.dart';
 import '../leyouts/base.dart';
 import 'component/Element.dart';
 import 'component/blockAuth.dart';
@@ -101,6 +102,8 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
                         colorConnect=Colors.red;
                         attente=false;
                         MessageFlache(message: "Mot de passe incorrecte");
+                        //efface
+
                       });
 
 
