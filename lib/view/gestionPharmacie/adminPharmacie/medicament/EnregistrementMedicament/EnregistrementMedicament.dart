@@ -190,6 +190,7 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
           ),
         ]).lancer(),
         if( EnregistrementMedicament.quantite!="")
+
           LigneElement([
             BlockDate(long:longElement, dateExp,(){
               showDatePicker(
@@ -202,7 +203,7 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
                   dateExp=ajoutzeroDate(value!.day.toString())+"-"+ajoutzeroDate(value!.month.toString())+" "+value!.year.toString();
                 });
               });
-            },large: 35).lancer(),
+            },large: 30).lancer(),
 
           ]).lancer(),
 
@@ -214,7 +215,7 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
           String medicamentDose=EnregistrementMedicament.doses ?? "";
           String medicamentUni=EnregistrementMedicament.unite ?? "";
 
-          String medicamentquantite =EnregistrementMedicament.quantite ?? "";
+          String medicamentquantite =EnregistrementMedicament.quantite ??  "";
 
 
 

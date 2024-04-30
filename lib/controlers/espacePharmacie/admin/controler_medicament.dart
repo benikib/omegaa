@@ -15,10 +15,11 @@ class Controler_medicament{
   Future<String> Enregistrer(nom, forme, prix, dose, unite,medicamentquantite,dateExp) async{
     int verificationProd=0;
 
+
 if (medicamentquantite!="" && dateExp!="00-00-0000"){
 
-
-  int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite,quantite_detail: medicamentquantite,dateExpiration: dateExp).ajouter();
+  int quantite_detail = int.parse(medicamentquantite);
+  int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite,quantite_detail: quantite_detail,dateExpiration: dateExp).ajouter();
   if(verificationProd==0){
 
     return "le produit existe deja ou le champ est vide ";
