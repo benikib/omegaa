@@ -43,7 +43,6 @@ class EnregistrementMedicament extends StatefulWidget {
 
   EnregistrementMedicament();
 
-
   @override
   State<EnregistrementMedicament> createState() => EnregistrementMedicamentState();
 
@@ -126,33 +125,29 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
           ).lancer(),
           IconEnr(width, Icons.add)
         ]).lancer(),
-        LigneElement([
-          InputCostom(type:TextInputType.number,elevation:5,long: width-140,lar: 50,
-              fonctions: (v){
-                EnregistrementMedicament.doses=v;
-              },
-              value: "Dose"
-          ).lancer()
 
-
-
+    LigneElement([
+      InputCostom(type:TextInputType.number,elevation:5,long: width-140,lar: 50,
+          fonctions: (v){
+            EnregistrementMedicament.doses=v;
+          },
+          value: "Dose"
+      ).lancer()
+      ,
+      Combobox(
+          colorInterne: Colors.white,
+          long: 85,
+          fonctions: (v){
+            setState(() {
+              EnregistrementMedicament.unite=v;
+            });
+},
+          elevation: 5
           ,
-          Combobox(
-              colorInterne: Colors.white,
-              long: 85,
-              fonctions: (v){
-
-                setState(() {
-                  EnregistrementMedicament.unite=v;
-
-                });
-              },
-              elevation: 5
-              ,
-              elements: ["mg", "ml", "poid"],
-              colorBordure: Colors.white
-          ).lancer()
-        ]).lancer(),
+          elements: ["mg", "ml", "poid"],
+          colorBordure: Colors.white
+      ).lancer()
+    ]).lancer(),
 
         LigneElement([
           InputCostom(type:TextInputType.number,elevation:5,long: width-140,lar: 50,
@@ -220,10 +215,9 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
 
 
           if(medicamentNom=="" || medicamentPrix =="" ||  medicamentDose==""){
-            MessageFlache(message: "Entrer tous les champs si possible");
 
 
-          }else{
+        }else{
             verifification ( context,medicamentNom,
                 medicamentForm, medicamentPrix,
 

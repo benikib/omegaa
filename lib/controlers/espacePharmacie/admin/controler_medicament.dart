@@ -4,6 +4,7 @@ import '../../../models/modelMedicament.dart';
 import '../../../view/gestionPharmacie/adminPharmacie/medicament/EnregistrementMedicament/EnregistrementMedicament.dart';
 import '../../../view/gestionPharmacie/adminPharmacie/medicament/stockProduit.dart';
 import '../../../view/gestionPharmacie/panier/ajoutPanier.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class Controler_medicament{
   List<ModelMedicament> tampoProduit=[];
@@ -50,10 +51,15 @@ else{
     navigation(context, StockProduit(tab));
   }
 
+
+
+
   modifier(dateExpiration, quantite,id_pharmacie,id_medicament,{quantite_paquet=0}) async {
     ModelMedicament.modifier(id_medicament, id_pharmacie,dateExpiration: dateExpiration,quantite: quantite,quantite_paquet:quantite_paquet );
     navigation(context, StockProduit(await ModelMedicament.afficher()));
   }
+
+
 
   rechercherVendre(String medoc) async{
 
@@ -63,6 +69,21 @@ else{
   rechercherStock(String medoc) async{
 
     navigation(context, StockProduit(await ModelMedicament.rechercher(medoc)));
+
+  }
+
+  verifierDate() async{
+    print(await ModelMedicament.verifierDate());
+    if(await ModelMedicament.verifierDate()==true){
+      FlutterRingtonePlayer.play(
+        android: AndroidSounds.notification,
+        ios: IosSounds.glass,
+        looping: true,
+        volume: 1.0,
+      );
+
+
+    }
 
   }
 
