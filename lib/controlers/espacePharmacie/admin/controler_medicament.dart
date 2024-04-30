@@ -3,6 +3,8 @@ import 'package:omegaa/elper/navigation.dart';
 import '../../../models/modelMedicament.dart';
 import '../../../view/gestionPharmacie/adminPharmacie/medicament/EnregistrementMedicament/EnregistrementMedicament.dart';
 import '../../../view/gestionPharmacie/adminPharmacie/medicament/stockProduit.dart';
+import '../../../view/gestionPharmacie/panier/ajoutPanier.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class Controler_medicament{
 
@@ -27,14 +29,43 @@ class Controler_medicament{
 
   voirStock()async{
     var tab=await ModelMedicament.afficher();
-    navigation(context, StockProduit(await ModelMedicament.afficher()));
+    navigation(context, StockProduit(tab));
   }
+
+
+
+
   modifier(dateExpiration, quantite,id_pharmacie,id_medicament,{quantite_paquet=0}) async {
     ModelMedicament.modifier(id_medicament, id_pharmacie,dateExpiration: dateExpiration,quantite: quantite,quantite_paquet:quantite_paquet );
     navigation(context, StockProduit(await ModelMedicament.afficher()));
   }
-  rechercher(String medoc)async{
-    return await ModelMedicament.rechercher(medoc);
+
+
+
+  rechercherVendre(String medoc) async{
+
+    navigation(context, AjoutPanier(await ModelMedicament.rechercher(medoc)));
+
+  }
+  rechercherStock(String medoc) async{
+
+    navigation(context, StockProduit(await ModelMedicament.rechercher(medoc)));
+
+  }
+
+  verifierDate() async{
+    print(await ModelMedicament.verifierDate());
+    if(await ModelMedicament.verifierDate()==true){
+      FlutterRingtonePlayer.play(
+        android: AndroidSounds.notification,
+        ios: IosSounds.glass,
+        looping: true,
+        volume: 1.0,
+      );
+
+
+    }
+
   }
 
 }

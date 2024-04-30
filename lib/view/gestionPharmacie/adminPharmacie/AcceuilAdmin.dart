@@ -45,13 +45,13 @@ class pageAccueilleState extends State<pageAccueille> {
                   crossAxisSpacing: 8.0,
                   mainAxisSpacing: 14.0,
                   children: <Widget>[
-                    ElementBlock1("imagess/logo medicament.png", "Vendre",
+                    ElementBlock1("imagess/medicament-medicamenteux.png", "Vendre",
                             (){
                               Controler_panier(context).ajouterAuPanier();
                         }, context)
                         .afficheElement(),
                     ElementBlock1(
-                        "imagess/logoStocks.png", "Stock",  (){
+                        "imagess/gestion-de-linventaire.png", "Stock",  (){
                       Controler_medicament(context).voirStock();
                     },
                         context).afficheElement(),
@@ -59,10 +59,10 @@ class pageAccueilleState extends State<pageAccueille> {
                             (){
                           Controler_inventaire(context).faireInventaire();
                         }, context).afficheElement(),
-                    ElementBlock1("imagess/logo vendeurs.png", "Vendeur",
+                    ElementBlock1("imagess/agent.png", "Vendeur",
                             (){}, context).afficheElement(),
                     ElementBlock1(
-                        "imagess/PAR.png", "Deco",  (){
+                        "imagess/deconnexion.png", "Deco",  (){
                       controllerAuth(context).deconnecter();
 
                     },

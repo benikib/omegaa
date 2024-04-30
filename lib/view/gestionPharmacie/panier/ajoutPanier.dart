@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:omegaa/elper/navigation.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import '../../../controlers/espacePharmacie/admin/controler_medicament.dart';
 import '../../../controlers/espacePharmacie/controlerVente.dart';
 import '../../../controlers/espacePharmacie/controler_panier.dart';
@@ -22,14 +23,11 @@ import '../adminPharmacie/AcceuilAdmin.dart';
 
 class AjoutPanier extends StatefulWidget {
   var tampoProduit;
-
-
   AjoutPanier(this.tampoProduit);
-
   @override
   State<AjoutPanier> createState() => PanierState(this.tampoProduit);
-}
 
+}
 class PanierState extends State<AjoutPanier> {
   bool switchValue = false;
   int posCombo=0;
@@ -44,6 +42,8 @@ class PanierState extends State<AjoutPanier> {
 
   @override
   Widget build(BuildContext context) {
+    Controler_medicament(context).verifierDate();
+
     var long = MediaQuery.of(context).size.width;
     var larg = MediaQuery.of(context).size.height;
     double hauteur= MediaQuery.of(context).size.height;
@@ -72,6 +72,7 @@ class PanierState extends State<AjoutPanier> {
                   (quantite * int.parse(tampoProduit[indexParcour].prix!))
                       .toString()
                 ];
+
                 AlertAjoutElement(
                         nomClient: (e) {
                           nom = e;
@@ -213,15 +214,15 @@ class PanierState extends State<AjoutPanier> {
                     tampoProduit[indexParcour].quantite_paquet
                   ];
                   Controler_panier(context).Enregistrer(element);
-                  print("ajout avec succes");
+
                 } else {
                   alerteVente(() {
                     Controler_panier(context).ajouterAuPanier();
                   }, "Entrer la quantite du produit !");
                 }
               },
-                      InputRecherche(context, () async {
-                        print(await Controler_medicament(context).rechercher("h"));
+                  InputRecherche(context, (x) {
+
                       }, long: long - 130, larg: 40)
                           .lancer())
                   .createBlock(MediaQuery.of(context).size.width))
@@ -230,6 +231,8 @@ class PanierState extends State<AjoutPanier> {
           .afficheBlock(MediaQuery.of(context).size.width),
     );
   }
+
+
 
   Widget TextPesro(String text, Color c) {
     return Padding(
@@ -240,6 +243,8 @@ class PanierState extends State<AjoutPanier> {
       padding: EdgeInsets.only(top: 8, bottom: 8),
     );
   }
+
+
 
   alerteVente(Function action, String message) {
     return AlertDialogue(

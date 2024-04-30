@@ -28,7 +28,6 @@ Future<void> verifification ( context,medicamentNom,
 class EnregistrementMedicament extends StatefulWidget {
   static  var nom_medicament,forme_medicament,doses,prixs,unite="mg";
 
-
   @override
   State<EnregistrementMedicament> createState() => EnregistrementMedicamentState();
 
@@ -103,18 +102,13 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
           },
           value: "Dose"
       ).lancer()
-
-
-
       ,
       Combobox(
           colorInterne: Colors.white,
           long: 85,
           fonctions: (v){
-
             setState(() {
               EnregistrementMedicament.unite=v;
-
             });
 },
           elevation: 5

@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class MessageFlache{
+
   String message="";
+
+
   int temps= 2;
   ToastGravity position=ToastGravity.BOTTOM;
   MessageFlache({required String message,temps=2, position=ToastGravity.BOTTOM}){
@@ -17,11 +20,12 @@ class MessageFlache{
      Fluttertoast.showToast(
         msg: this.message,
         toastLength: Toast.LENGTH_SHORT,
+
+        timeInSecForIosWeb: 2,
         gravity: position,
-        timeInSecForIosWeb: this.temps ,
+
         backgroundColor: Colors.blueGrey,
-        fontSize: 16.0
-    );
+        fontSize: 16.0);
   }
 
 
