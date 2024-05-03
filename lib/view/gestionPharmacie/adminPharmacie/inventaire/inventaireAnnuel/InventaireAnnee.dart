@@ -75,7 +75,7 @@ class inventaireAnnuelState extends State<inventaireAnnuel> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Combobox(colorBordure: cCombo,large: 30,long:150,colorInterne: cCombo,fonctions: (a,b){
+                              Combobox(colorBordure: cCombo,large: 30,long:150,colorInterne: cCombo,f: (a,b){
                                 setState(() {
                                   i2=b;
                                   this.anneeActuelle=a;

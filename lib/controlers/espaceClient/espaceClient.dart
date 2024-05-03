@@ -6,7 +6,7 @@ import 'package:omegaa/view/auth/pageAuthentificationPharma.dart';
 import '../../elper/navigation.dart';
 import '../../models/modelClient.dart';
 import '../../view/auth/pageAuthentificationClient.dart';
-import '../../view/client/pageEnregistrement.dart';
+
 import '../../view/espaceClient/parametre.dart';
 import '../controllerAuth.dart';
 

@@ -82,7 +82,7 @@ class inventaireMensuelState extends State<inventaireMensuel> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Combobox(colorBordure: cCombo,large: 30,long:120,colorInterne: cCombo,fonctions: (a,b){
+                              Combobox(colorBordure: cCombo,large: 30,long:120,colorInterne: cCombo,f: (a,b){
                                 setState(() {
                                   i=b;
                                   this.moisActuel=formatMoisInverse(a);
@@ -91,7 +91,7 @@ class inventaireMensuelState extends State<inventaireMensuel> {
                                 });
 
                               },elements: this.listeMois).lancer(i: i),
-                              Combobox(colorBordure: cCombo,large: 30,long:120,colorInterne: cCombo,fonctions: (a,b){
+                              Combobox(colorBordure: cCombo,large: 30,long:120,colorInterne: cCombo,f: (a,b){
                                 setState(() {
                                   i2=b;
                                   this.anneeActuelle=a;

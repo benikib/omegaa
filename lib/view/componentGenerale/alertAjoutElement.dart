@@ -30,9 +30,7 @@ class AlertAjoutElement{
                     fontSize: 15
                 ),),
                 (this.avecTextFiel)?
-                InputCostom(fonctions: (e){
-                  this.nomClient(e);
-                },value: "Entrer le nom du client...",couleur:Color.fromRGBO(228, 228, 228,1 ),lar:30,long:250,elevation: 1).lancer():
+                InputCostom(Name:"nomClien",value: "Entrer le nom du client...",couleur:Color.fromRGBO(228, 228, 228,1 ),lar:30,long:250,elevation: 1).lancer():
                 Center(),
               ],
             )  ,

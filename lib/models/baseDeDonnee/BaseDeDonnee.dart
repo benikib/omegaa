@@ -16,7 +16,7 @@ class BaseDeDonnee {
 
   Future<Database> createDatabase () async {
     Directory directory=await getApplicationDocumentsDirectory();
-    final path=join(directory.path,"omegapharma5.db");
+    final path=join(directory.path,"omegapharma6.db");
     return await openDatabase(
       path,
       version:1,
@@ -26,16 +26,10 @@ class BaseDeDonnee {
 
   }
   onCreate(Database database,int version)async{
-    await database.execute('''
-    CREATE TABLE utilisateur(
-    login TEXT NOT NULL,
-    mot_passe TEXT NOT NULL,
-    droit TEXT NOT NULL,
-    id_origine INTEGER 
-    )
-    ''');
 
     //création des tables
+
+
     await database.execute('''
     CREATE TABLE medicament(
     id_medicament INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -62,13 +56,11 @@ class BaseDeDonnee {
     CREATE TABLE pharmacie(
     id_pharmacie INTEGER PRIMARY KEY AUTOINCREMENT,
     nom_pharmacie TEXT NOT NULL,
-    ville_pharmacie TEXT NOT NULL,
-    commune_pharmacie TEXT NOT NULL,
-    adresseSup TEXT,
-    numero_phone_pharmacie TEXT 
-
+    login TEXT NOT NULL,
+    mot_passe TEXT NOT NULL
     )
     ''');
+
     await database.execute('''
     CREATE TABLE medicament_vente(
     id_vente INTEGER ,

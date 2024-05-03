@@ -21,7 +21,7 @@ class Base {
       Container(
 
         child: Image.asset(
-          "imagess/logoOmega.png",
+          "imagess/logoOmegaPharma.png",
           width: 100,
         ),
       ),

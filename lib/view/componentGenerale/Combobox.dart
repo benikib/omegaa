@@ -4,22 +4,28 @@ import 'package:marquee/marquee.dart';
 
 class Combobox {
 
-  Function? fonctions;
+
   List<String>? elements;
   Color? colorText;
   Color? colorBordure;
   Color? colorInterne;
+  Function f;
   double large;
   double long;
   double elevation;
+  var valeurPropre=[];
 
 
-  Combobox({this.fonctions, this.elements,
+  Combobox({ this.elements,
     this.colorBordure,this.colorInterne=Colors.white,
-    this.long=150,this.large=45,this.elevation=2});
+    this.long=150,this.large=45,this.elevation=2,required this.f});
+
+
+
 
   Widget lancer({i=0}) {
     this.elements = (this.elements!.length == 0) ? ["Vide"] : this.elements!;
+
 
     return Container(
       height: large,
@@ -57,7 +63,6 @@ class Combobox {
                 child: Padding(
                   padding: EdgeInsets.only(left: 17),
                   child: Text(
-
                     itm,
                     overflow: TextOverflow.visible,
                     style: TextStyle(
@@ -74,10 +79,10 @@ class Combobox {
           }).toList(),
 
           onChanged: (String? value) {
-
            lancer();
+           valeurPropre=[value,this.elements?.indexOf(value!)];
+           f(value,this.elements?.indexOf(value!));
 
-            fonctions!(value,this.elements?.indexOf(value!));
           },
         ),
       ),

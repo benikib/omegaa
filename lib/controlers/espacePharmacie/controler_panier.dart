@@ -15,12 +15,28 @@ creerPanier(){
   cPanier().createPanier();
 }
  ajouterAuPanier()async{
+  print(await ModelMedicament.afficher());
     navigation(context, AjoutPanier(await ModelMedicament.afficher()));
   }
 
-  Enregistrer(var element)async{
+  Enregistrer(List<ModelMedicament> listE,int index, var quantite,bool switchV)async{
+
+  if(!listE.isEmpty){
+    ModelMedicament e=listE[index];
+    var element = [
+      e.id.toString(),
+      e.nom.toString(),
+      e.prix.toString(),
+      [quantite,switchV],
+      quantite.toString(),
+      e.quantite_paquet
+    ];
     await  cPanier().ajouterElement(element);
-  ajouterAuPanier();
+
+
+  }
+
+
 
   }
 

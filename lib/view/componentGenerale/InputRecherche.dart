@@ -6,8 +6,8 @@ class InputRecherche{
 
   var context;
   String textArecchercher="";
-
-  Function f;
+Function f;
+  String valeurPropre="";
   String valeurInterne;
   double long,larg;
   FocusNode focus=FocusNode();
@@ -32,7 +32,7 @@ class InputRecherche{
           focusNode: focus,
           controller: TextEditingController(text:valeurInterne ),
           onChanged: (z){
-            textArecchercher=z;
+            this.valeurPropre=z;
           },
           keyboardType:TextInputType.name,
           style: TextStyle(
@@ -43,7 +43,8 @@ class InputRecherche{
           decoration: InputDecoration(
             prefixIcon: InkWell(child:Icon(Icons.search),onTap: (){
 
-              this.f(textArecchercher);
+              this.f(valeurPropre);
+
             },),
             hintText:"Recheche...",
             border: OutlineInputBorder(

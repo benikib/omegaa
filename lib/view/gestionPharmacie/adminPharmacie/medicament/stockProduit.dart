@@ -13,8 +13,10 @@ import '../../../../elper/navigation.dart';
 import '../../../../session/Session.dart';
 import '../../../componentGenerale/ButtonCostom.dart';
 import '../../../componentGenerale/Combobox.dart';
+import '../../../componentGenerale/IconCostum.dart';
 import '../../../componentGenerale/InputCostom.dart';
 import '../../../componentGenerale/InputRecherche.dart';
+import '../../../componentGenerale/SwitchMedoc.dart';
 import '../../../componentGenerale/Tableau.dart';
 import '../../../componentGenerale/alertAjoutElement.dart';
 import '../../../componentGenerale/alerteActionUnique.dart';
@@ -37,9 +39,6 @@ class StockProduitState extends State<StockProduit> {
  int quantite=0;
  String dateExp="00-00-0000";
   List<ModelMedicament> tampoProduit=[];
-
-
-
   var indexParcour=0;
   var d=DateTime.now();
   late double longElement;
@@ -47,8 +46,8 @@ class StockProduitState extends State<StockProduit> {
   late double longQte;
   bool switchValue = false;
 
-
   StockProduitState(this.tampoProduit);
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +56,33 @@ class StockProduitState extends State<StockProduit> {
     longElement1=80;
     longQte=MediaQuery.of(context).size.width-220;
     var h=MediaQuery.of(context).size;
+    String _selectedDate = '';
+    Color colorCombo=Colors.black12;
+
+    InputRecherche recherche = InputRecherche(larg:40,long: 270,context,(x){
+      Controler_medicament(context).rechercherStock(x);
+    });
+
+
+    InputCostom quantite  =  InputCostom(
+      Name: "quantite",
+        type: TextInputType.number,
+        long: longQte,
+        value: "Quant",elevation: 3
+    );
+    Combobox medoc= Combobox(
+        long:longElement+10 ,large: 40,
+        f:(a,pos){
+          setState(() {
+            indexParcour=pos;
+            posCombo=indexParcour;
+          });
+        },
+        elements: StringifierCombo(this.tampoProduit),//Stringifier(tampoProduit),
+        colorBordure:colorCombo);
+
+
+
     return Scaffold(
       appBar:Entete(
           flecheR: true,
@@ -68,72 +94,30 @@ class StockProduitState extends State<StockProduit> {
           text: "",
           logo: "imagess/Personne.png"
       ).Demarrer(),
-      body:Base(content: listeProduit(context),child: [Card(
-        ),]
-      ).lancer(525,h.width-30),
-    );
-  }
-
-  Widget listeProduit(BuildContext context){
-    String _selectedDate = '';
-    Color colorCombo=Colors.black12;
-    return
+      body:Base(content:
       Container(
-        width: MediaQuery.of(context).size.width-60,
-          child:
-          Column(
+      width: MediaQuery.of(context).size.width-60,
+        child:
+        Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children:[
-              InputRecherche(larg:40,long: 270,context,(x){
-                Controler_medicament(context).rechercherStock(x);
-
-              }).lancer(),
-              blockStock(
-                  Combobox(
-                      long:longElement+10 ,large: 40,
-                      fonctions:(a,pos){
-                        setState(() {
-                          indexParcour=pos;
-                          posCombo=indexParcour;
-                        });
-                      },
-                      elements: StringifierCombo(this.tampoProduit),//Stringifier(tampoProduit),
-                      colorBordure:colorCombo).lancer(i:posCombo),
-                  InkWell(onTap:(){
-                    Controler_medicament(context).ajouter();
-                  },
-                    child:Container(
-                      width: longElement1,
-                      child:Icon(
-                        Icons.add_circle_sharp,
-                      ) ,
-                    )  ,
-                  ),
-                  InputCostom(
-                    type: TextInputType.number,
-                    long: longQte,
-                    value: "Quant",fonctions: (v){
-                    quantite =int.parse(v);
-
-                  },elevation: 3
+              recherche.lancer(),
+                medoc.lancer()
+                 ,
+                  IconCostum(
+                    iconInterne:Icons.add_circle_sharp,
+                    f:(){
+                      Controler_medicament(context).ajouter();
+                    },
+                    taille: longElement1
                   ).lancer(),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text((switchValue==false)?"En pièce":"En paquet"),
-                    Switch(
-                        activeColor: Color.fromRGBO(50, 190, 166, 1),
-                       inactiveTrackColor: Colors.grey,
-                        inactiveThumbColor: Colors.black,
-                        value: switchValue,
-                        onChanged: ((bool){
-                          setState(() {
-                              switchValue = bool;
-                          });
-                        }))
-                  ],
-                ),
+                quantite.lancer(),
+              SwitchMedoc(f:(bool){
+                setState(() {
+                  switchValue = bool;
+                });
+                },SwitchValue: switchValue).lancer(),
+
                 BlockDate(long:longElement, dateExp,(){
                   showDatePicker(
                     context: context,
@@ -142,16 +126,15 @@ class StockProduitState extends State<StockProduit> {
                     lastDate: DateTime(20100, 12, 31),
                   ).then((value) {
                     setState(() {
-                    dateExp=ajoutzeroDate(value!.day.toString())+"-"+ajoutzeroDate(value!.month.toString())+" "+value!.year.toString();
+                      dateExp=ajoutzeroDate(value!.day.toString())+"-"+ajoutzeroDate(value!.month.toString())+" "+value!.year.toString();
                     });
                   });
                 },large: 35).lancer(),
-              ),
 
               ButtonCostom(taille:7,"Ajouter au stock",Color.fromRGBO(50, 190, 166, 1), (){
                 if(quantite==0 || dateExp=="00-00-0000"){
                   AlertActionUnique(
-                      (){
+                          (){
                         Controler_medicament(context).voirStock();
                       },context,"Entrez la quantite ou la date valide","Message"
                   ).lancer();
@@ -162,57 +145,39 @@ class StockProduitState extends State<StockProduit> {
                     qte_paquet=int.parse(e);
                   },avecTextFiel: true,
                           (){
-                            Controler_medicament(context).modifier(quantite_paquet:qte_paquet,dateExp, [quantite,switchValue],
-                                Session.id_connect, this.tampoProduit[indexParcour].id);
-                          },
+                        Controler_medicament(context).modifier(quantite_paquet:qte_paquet,dateExp, [quantite,switchValue],
+                            Session.id_connect, this.tampoProduit[indexParcour].id);
+                      },
                           (){
-                            Controler_medicament(context).voirStock();
+                        Controler_medicament(context).voirStock();
 
-                          },
+                      },
                       context,
                       "Entrer le nombre de pièces par paquet",
                       "Message"
                   ).lancer();
                 }else{
-                  Controler_medicament(context).modifier(dateExp,[quantite,switchValue],
+                  Controler_medicament(context).modifier(dateExp,[quantite.ValueAf(),switchValue],
                       Session.id_connect, this.tampoProduit[indexParcour].id,quantite_paquet:tampoProduit[indexParcour].quantite_paquet );
                 }
 
-                }).lancer() ,
+              }).lancer() ,
 
-          Container(
-            height: 250,
-            child: Tableau(["Produit","Prix","Pièces","Paquets","Expiration"],
-                StringifierTab(this.tampoProduit),
-                MediaQuery.of(context).size.width-30).lancer(),
-          )
-    ]
-    )
+              Container(
+                height: 250,
+                child: Tableau(["Produit","Prix","Pièces","Paquets","Expiration"],
+                    StringifierTab(this.tampoProduit),
+                    MediaQuery.of(context).size.width-30).lancer(),
+              )
+              ]),
+        )
+
+          ,child: [Card(
+        ),]
+      ).lancer(525,h.width-30)
     );
-
   }
 
-
-  //
-  blockStock(Widget w1,Widget w2,Widget w3,Widget w4,Widget w5){
-    return Container(
-      height: 150,
-      child:Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [w1,w2],),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-
-            children: [w3,w4],),
-         w5,
-        ],
-      )
-    );
-
-  }
 
 
 

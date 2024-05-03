@@ -6,6 +6,7 @@ import '../../../view/gestionPharmacie/adminPharmacie/medicament/stockProduit.da
 import '../../../view/gestionPharmacie/panier/ajoutPanier.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
+
 class Controler_medicament{
 
   var context;
@@ -15,6 +16,8 @@ class Controler_medicament{
     navigation(context,EnregistrementMedicament());
   }
   Future<String> Enregistrer(nom, forme, prix, dose, unite) async{
+
+    print ([nom,forme,prix,dose,unite]);
 
       int verificationProd= await ModelMedicament(nom:nom,forme: forme,prix: prix,dose: dose,unite: unite).ajouter();
       if(verificationProd==0){

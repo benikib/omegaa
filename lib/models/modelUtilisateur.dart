@@ -10,11 +10,11 @@ class ModelUtilisateur{
   static connecter(String login,String mot_de_passe)async {
     var boll=false;
     var droit="";
-    String requette="select id_origine,droit from utilisateur where mot_passe='$mot_de_passe' and login='$login'";
+    String requette="select id_pharmacie from pharmacie where mot_passe='$mot_de_passe' and login='$login'";
     var val=await ModelUtilisateur.base.reccuperationDonnees(requette);
     if(val.length!=0){
-      droit=val[0]["droit"];
-      Session.id_connect=val[0]["id_origine"];
+
+      Session.id_connect=val[0]["id_pharmacie"];
       boll=true;
     }
     return [boll,droit];

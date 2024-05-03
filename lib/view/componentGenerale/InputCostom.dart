@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_regex/flutter_regex.dart';
 
 class InputCostom {
-  Function? fonctions;
+  static Map<String,String > valuesInput={};
   String valeurInterne="";
   var long, lar, value;
   Color couleur;
+  String valeurPropre="";
   Color couleurBorder;
   double elevation;
   var type;
   var estcache = false;
   var exp=RegExp(r'^[A-Za-z]+$');
   var isvalid=true;
+  String Name="";
 
 
 
 
 
   InputCostom({
-    this.fonctions,
+    this.valeurPropre="",
+    required this.Name,
     this.long = 80,
     this.lar = 40,
     this.value,
@@ -28,11 +31,15 @@ class InputCostom {
     this.couleurBorder = Colors.white24,
     this.elevation = 0,
     this.valeurInterne=""
-
-
   });
 
+  ValueAf(){
+
+    return valuesInput[Name];
+  }
+
   Widget lancer() {
+
     return Container(
       child: Column(
         children: [ Container(
@@ -67,7 +74,7 @@ class InputCostom {
                     color: Colors.black,
                   ),
                   onChanged: (value) {
-                    fonctions!(value);
+                    valuesInput[this.Name]=value;
                     isvalid= exp.hasMatch(value);
                   },
 

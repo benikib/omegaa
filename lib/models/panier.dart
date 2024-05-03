@@ -9,6 +9,7 @@ class cPanier{
   createPanier(){
     Session.panier=Panier([]);
   }
+
   ajouterElement(List<dynamic> element)async{
     if(!Session.panier.verifierExistance(element[1])){
       Session.increPanier+=1;

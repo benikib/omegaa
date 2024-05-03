@@ -9,12 +9,10 @@ class Panier{
   Panier(this.contenue);
 
   ajouterElement(element){
-    print(element);
-
     this.contenue.add(element);
-    miseEnpropre();
-
+    EviteRedondance();
   }
+
  static coupageId(List<List<String>> tab ){
     List<List<String>> tampo=[];
 
@@ -26,12 +24,8 @@ class Panier{
       }
     }
     tampo.add(reserve);
-
-
   }
   return tampo;
-
-
   }
 
   afficheInfo(){
@@ -39,7 +33,7 @@ class Panier{
     return  r;
   }
 
-  miseEnpropre(){
+  EviteRedondance(){
     for(int i=0; i<contenue.length; i++){
       int quant=0;
       int total=0;
@@ -52,7 +46,6 @@ class Panier{
           contenue.removeAt(j);
         }
       }
-
       contenue[i][3][0]=(int.parse(contenue[i][3][0].toString())+quant).toString();
       contenue[i][4]=(int.parse(contenue[i][4].toString())+total).toString();
       contenue[i][3][1]+=(quantGros);

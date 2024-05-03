@@ -30,6 +30,23 @@ class pageEnregistrementState extends State<pageEnregistrement> {
     var colorButton= Color.fromRGBO(50, 190, 166, 1);
     var colorInput=Color.fromRGBO(230, 230, 230,1);
 
+    InputCostom nomPharma=InputCostom(Name:"nomPharma",lar:longInp,long:largInp,
+        value: "Nom du pharmacie",
+        couleur:colorInput
+    );
+    InputCostom login=InputCostom(Name:"login",lar:longInp,long:largInp,
+        value: "login",
+        couleur:colorInput
+    );
+    InputCostom motDePasse=InputCostom(Name:"motDePasse",lar:longInp,long:largInp,
+        value: "motDepasse",
+        couleur:colorInput
+    );
+    InputCostom motDePasseConfirmation=InputCostom(Name:"motDePasseConfirmation",lar:longInp,long:largInp,
+        value: "confirmer votre mot de passe",
+        couleur:colorInput
+    );
+
     return  Scaffold(
         appBar:Entete(
             flecheR: false,
@@ -46,73 +63,15 @@ class pageEnregistrementState extends State<pageEnregistrement> {
               blockEnregistrement(
                 "Créer un compte pharmacie ",
                 [
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
-                    pageEnregistrement.nom_pharmacie=val;
-                  },
-                      value: "Nom du pharmacie",
-                    couleur:colorInput
-                  ).lancer(),
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
-                    pageEnregistrement.telephone=val;
+                  nomPharma.lancer(),
+                 login.lancer(),
 
-                  },
-                      value: "Telephone pharmacie",
-                      couleur: colorInput
-                  ).lancer(),
-                  Combobox(
-                    fonctions: (val,y){
-                      print(val);
-                      pageEnregistrement.ville=val;
-                    },elements: ["ville de résidance","Kinshasa"],
-                      large:longInp.toDouble() ,
-                      long: largInp,
-                    colorBordure: Colors.white24,
-                    colorInterne: colorInput
-                  ).lancer(),
-                  Combobox(
-                      fonctions: (val,f){
-                        pageEnregistrement.commune=val;
-                      },elements: ["commune résidence","kinshasa","mont-ngafula","matete"],
-                      large:longInp.toDouble() ,
-                      long: largInp,
-                      colorBordure: Colors.white24,
-                      colorInterne: colorInput
-                  ).lancer(i:0),
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
-                    pageEnregistrement.adresseSup=val;
-                  },
-                      value: " rue et quartier",
-                      couleur: colorInput
-                  ).lancer(),
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
-                    pageEnregistrement.login=val;
-                  },
-                      value: "login",
-                      couleur: colorInput,
-
-                  ).lancer(),
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
-                    pageEnregistrement.mot_de_passe=val;
-                  },
-                      value: "mot de passe",
-                      couleur: colorInput,
-                      type: TextInputType.visiblePassword,
-                      estcache: true
-                  ).lancer(),
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
-                    pageEnregistrement.mot_de_passeConf=val;
-                  },
-                      value: "confirmer le mot de passe",
-                      couleur: colorInput,
-                     type: TextInputType.visiblePassword,
-                      estcache: true
-                  ).lancer(),
+                 motDePasse.lancer(),
+                  motDePasseConfirmation.lancer(),
                   ButtonCostom("Créer le compte",colorButton,(){
                     Controler_pharmacie(context).Enregistrer(
-                        pageEnregistrement.nom_pharmacie,
-                        pageEnregistrement.ville,pageEnregistrement.commune,
-                      pageEnregistrement.adresseSup,pageEnregistrement.telephone,pageEnregistrement.mot_de_passe,pageEnregistrement.login);
-
+                        nomPharma.ValueAf(),
+                       motDePasse.ValueAf(),motDePasseConfirmation.ValueAf(),login.ValueAf());
                   },rad: 9).lancer()
                 ],
                 tailleT: 45

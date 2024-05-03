@@ -52,6 +52,7 @@ class ModelMedicament {
       String requetteTest2="select id_medicament from medicament "+
           " where nom_medicament='$nom' and "+
           " unite='$unite' and dose='$dose' and forme='$forme'";
+
       var resultTest2=await base.reccuperationDonnees(requetteTest2);
       if(resultTest2.length==0){
         val= await base.ajoutDonnees(this.nomTable,{"nom_medicament":this.nom,
@@ -121,6 +122,7 @@ class ModelMedicament {
           quantite_detail:res[i]["quantite_detail"],id:res[i]["id_medicament"],
           quantite_paquet:res[i]["quantite_paquet"],quantite_gros:res[i]["quantite_gros"]   ));
     }
+
     return  valeur;
   }
 

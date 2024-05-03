@@ -33,13 +33,10 @@ class visibiliteContainerState extends State<VisibiliteContainer> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            InputCostom(fonctions: (a){
-              f(a);
-              print(a);
-            },long: 150,lar:32,elevation: 2,
+            InputCostom(Name:"rech",long: 150,lar:32,elevation: 2,
               value: "filtrer"
             ).lancer(),
-          Combobox(large:32,elements: ["ville","commune"],fonctions: (){
+          Combobox(large:32,elements: ["ville","commune"],f: (){
           },colorInterne: Colors.white,colorBordure: Colors.white
           ).lancer(),
           ],

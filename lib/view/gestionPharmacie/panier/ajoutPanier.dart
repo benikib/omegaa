@@ -12,6 +12,7 @@ import '../../componentGenerale/Combobox.dart';
 import '../../componentGenerale/InputCostom.dart';
 import '../../componentGenerale/InputRecherche.dart';
 import '../../componentGenerale/SwitchCostum.dart';
+import '../../componentGenerale/SwitchMedoc.dart';
 import '../../componentGenerale/alertAjoutElement.dart';
 import '../../componentGenerale/blockvente.dart';
 import '../../componentGenerale/buttonNavigationClient.dart';
@@ -37,16 +38,35 @@ class PanierState extends State<AjoutPanier> {
   List<ModelMedicament> tampoProduit = [];
   Color appBarColor = Color.fromRGBO(50, 190, 166, 1);
   late Color colorButton = Color.fromRGBO(50, 190, 166, 1);
+  Color colorCombo=Color.fromRGBO(228, 228, 228, 1);
 
   PanierState(this.tampoProduit);
 
   @override
   Widget build(BuildContext context) {
-    Controler_medicament(context).verifierDate();
+
+    //Controler_medicament(context).verifierDate();
 
     var long = MediaQuery.of(context).size.width;
     var larg = MediaQuery.of(context).size.height;
     double hauteur= MediaQuery.of(context).size.height;
+
+    InputCostom quant=InputCostom(Name:"quant",type: TextInputType.number,
+        lar: 30,
+        couleurBorder: Colors.black);
+
+    Combobox medoc=  Combobox(
+        colorInterne: colorCombo,
+        long: long - 160,
+        f: (val, pos) {
+          setState(() {
+            indexParcour = pos;
+            posCombo=indexParcour;
+          });
+        },
+        elements: StringifierCombo(tampoProduit),
+        colorBordure: colorCombo);
+
 
     return Scaffold(
       appBar: Entete(
@@ -60,132 +80,36 @@ class PanierState extends State<AjoutPanier> {
               logo: null)
           .Demarrer(),
       body: Base(
-              child: [
-            ButtonCostom("Valider", colorButton, () {
-              if (!tampoProduit.isEmpty && quantite != 0) {
-                var element = [
-                  tampoProduit[indexParcour].id.toString(),
-                  tampoProduit[indexParcour].toString(),
-                  (tampoProduit[indexParcour].prix.toString() + "fc")
-                      .toString(),
-                  quantite.toString(),
-                  (quantite * int.parse(tampoProduit[indexParcour].prix!))
-                      .toString()
-                ];
-
-                AlertAjoutElement(
-                        nomClient: (e) {
-                          nom = e;
-                        },
-                        avecTextFiel: true,
-                        () {
-                          ControlerVent(context)
-                              .ajouterUnevente([element], nom);
-                          var ControlerPanier = Controler_panier(context);
-                          ControlerPanier.vider();
-                        },
-                        () {
-                          Controler_panier(context).voirPanier();
-                        },
-                        context,
-                        "Voulez vous valider ?",
-                        "Message")
-                    .lancer();
-              } else {
-                alerteVente(() {
-                  Controler_panier(context).ajouterAuPanier();
-                }, "Entrer la quantite du produit !");
-              }
-            }, mt: hauteur-720)
-                .lancer(),
-          ],
+              child: [],
               content: BlockVente([
-                ElementBlock(
-                        "Produit",
-                        Combobox(
-                                colorInterne: Color.fromRGBO(228, 228, 228, 1),
-                                long: long - 160,
-                                fonctions: (val, pos) {
-                                  setState(() {
-                                    indexParcour = pos;
-                                    posCombo=indexParcour;
-                                  });
-                                },
-                                elements: StringifierCombo(tampoProduit),
-                                colorBordure: Color.fromRGBO(228, 228, 228, 1))
-                            .lancer(i:posCombo))
+                ElementBlock(elements:[
+                  TextPesro("Produit",Colors.black),
+                        medoc.lancer()])
                     .afficheElement(),
-                ElementBlock(
-                        element3: Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 50),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                    (switchValue == false) ? "pièce" : "paquet"),
-                                SwitchCostum(
-                                        couleurActive: Color.fromRGBO(50, 190, 166, 1),
-                                        couleurDesactive: Colors.black,
-                                        f: (bool) {
-                                          setState(() {
-                                            if (tampoProduit[indexParcour]
-                                                    .quantite_gros ==
-                                                0) {
-                                              switchValue = false;
-                                            } else {
-                                              switchValue = bool;
-                                            }
-                                          });
-                                        },
-                                        value: switchValue)
-                                    .lancer()
-                              ],
-                            ),
-                          ),
-                        ),
-                        "Quantite",
-                        InputCostom(
-                            type: TextInputType.number,
-                            lar: 30,
-                            couleurBorder: Colors.black,
-                            fonctions: (e) {
-                              int quantiteTest = 0;
-                              if (switchValue == false) {
-                                quantiteTest = tampoProduit[indexParcour]
-                                        .quantite_detail +
-                                    (tampoProduit[indexParcour].quantite_gros *
-                                        tampoProduit[indexParcour]
-                                            .quantite_paquet);
-                              } else {
-                                quantiteTest =
-                                    (tampoProduit[indexParcour].quantite_gros);
-                              }
 
-                              if (int.parse(e) > quantiteTest) {
-                                alerteVente(() {
-                                  Controler_panier(context).ajouterAuPanier();
-                                },
-                                    (switchValue == false)
-                                        ? "la quantité est suppérieure au stock !"
-                                        : "paquet");
-                              } else {
-                                quantite = int.parse(e);
-                              }
-                            }).lancer())
-                    .afficheElement(),
                 ElementBlock(
-                        "Prix",
+                    elements: [
+                  TextPesro("Quantite",Colors.black),
+                  SwitchMedoc(f:(b){
+                    setState(() {
+                      switchValue = b;
+                    });
+                  },SwitchValue: switchValue).lancer(),
+                  quant.lancer()
+                ]
+                ).afficheElement(),
+
+                ElementBlock(elements:[
+                  TextPesro("Prix",Colors.black),
                         TextPesro(
-                            (tampoProduit.length != 0)
-                                ? tampoProduit[indexParcour].prix.toString() +
-                                    " fc"
-                                : "0" + "  fc ",
-                            Colors.black))
+                            tampoProduit[indexParcour].prix.toString() + " fc"
+                              ,
+                            Colors.black)])
                     .afficheElement(),
-                ElementBlock(
-                        "Reste",
+
+
+                ElementBlock(elements:[
+                  TextPesro("Reste",Colors.black),
                         TextPesro(
                             (tampoProduit.length != 0)
                                 ? tampoProduit[indexParcour]
@@ -196,35 +120,17 @@ class PanierState extends State<AjoutPanier> {
                                         .quantite_gros
                                         .toString() +
                                     " pqts"
-                                : "0" + "",
-                            Colors.red))
+                                : "0" + "pcs",
+                            Colors.red)])
                     .afficheElement()
+
               ], () {
-                if (!tampoProduit.isEmpty && quantite != 0) {
-                  int qteCalcul = quantite;
-
-                  var element = [
-                    tampoProduit[indexParcour].id.toString(),
-                    tampoProduit[indexParcour].toString(),
-                    (tampoProduit[indexParcour].prix.toString())
-                        .toString(),
-                    [qteCalcul, switchValue],
-                    (qteCalcul)
-                        .toString(),
-                    tampoProduit[indexParcour].quantite_paquet
-                  ];
-                  Controler_panier(context).Enregistrer(element);
-
-                } else {
-                  alerteVente(() {
-                    Controler_panier(context).ajouterAuPanier();
-                  }, "Entrer la quantite du produit !");
-                }
+                  Controler_panier(context).Enregistrer(tampoProduit,indexParcour,quant.ValueAf(),switchValue);
               },
-                  InputRecherche(context, (x) {
+                  InputRecherche(context, (x) {}, long: long - 130, larg: 40)
+                          .lancer()
 
-                      }, long: long - 130, larg: 40)
-                          .lancer())
+              )
                   .createBlock(MediaQuery.of(context).size.width))
           .lancer(350, MediaQuery.of(context).size.width - 30),
       bottomNavigationBar: ButtonNavigationClient(context: context, model: 1)
@@ -234,15 +140,18 @@ class PanierState extends State<AjoutPanier> {
 
 
 
-  Widget TextPesro(String text, Color c) {
+  Widget TextPesro(String text, Color c ) {
     return Padding(
       child: Text(
         text,
-        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: c),
+        style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold, color: c),
       ),
       padding: EdgeInsets.only(top: 8, bottom: 8),
     );
   }
+
+
+
 
 
 

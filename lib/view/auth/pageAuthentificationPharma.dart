@@ -25,10 +25,12 @@ class pageAuthentificationPharma extends StatefulWidget {
   @override
   State<pageAuthentificationPharma> createState() => pageAuthentificationState();
 }
+
 class pageAuthentificationState extends State<pageAuthentificationPharma> {
  late  List<Widget> action;
  var attente=false;
  Color colorConnect=Colors.white24;
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,17 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
 
     var colorButton= Color.fromRGBO(50, 190, 166, 1);
     var colorInput=Color.fromRGBO(230, 230, 230,1);
+
+    InputCostom login= InputCostom(Name:"login",lar:longInp,long:largInp,couleurBorder: colorConnect,
+        value: "Entrez le login ",
+        couleur:colorInput
+    );
+
+    InputCostom passWord=InputCostom(Name:"passWord",lar:longInp,long:largInp,couleurBorder: colorConnect,
+        value: "Entrez le mot de passe ",
+        couleur:colorInput
+    );
+
     return Scaffold(
         appBar:Entete(
             flecheR: false,
@@ -65,20 +78,9 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
             content:blockAuth(
               "Authentifiez-vous",
                 blockInt(
-                    InputCostom(lar:longInp,long:largInp,couleurBorder: colorConnect,fonctions: (v){
-                      pageAuthentificationPharma.login=v;
-                    },
-                        value: "Entrez le login ",
-                        couleur:colorInput
-                    ).lancer(),
-                    InputCostom(lar:longInp,long:largInp,couleurBorder: colorConnect,fonctions: (v){
-                      pageAuthentificationPharma.password=v;
-                    },
-                        value: "Entrez le mot de passe ",
-                        couleur:colorInput
-                    ).lancer(),
+                  login.lancer(),
+                   passWord.lancer(),
                   [
-
                     Elemt("Création du compte",(){
                       AlertDialogue(
                           Title: "Message",
@@ -90,39 +92,12 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
                     Elemt("Mot de passe oublier ?",(){})
                   ]
                 ),
-                ButtonCostom("Connexion",attente:(attente==true)?true:false,colorButton,()async{
-                  setState(()async
-                  {
-                    attente=true;
-                    int v= await controllerAuth(context).connecter( pageAuthentificationPharma.login, pageAuthentificationPharma.password);
 
-                    if(v==0){
-                      setState(() {
-                        colorConnect=Colors.red;
-                        attente=false;
-                        MessageFlache(message: "Mot de passe incorrecte");
-                      });
-
-
-                    }else{
-                      MessageFlache(message: "Vous êtes connecté");
-                    }
-                  });
-
-
-
-
-
-
+                ButtonCostom("Connexion",colorButton,()async{
+                 await controllerAuth(context).connecter(login.ValueAf(),passWord.ValueAf());
                 }).lancer(),
-
             )  ,
-            child: [
-//InkWell(
-  //child: Text("Connecter Client?"),
-//)
-
-            ]
+            child: []
         ).lancer(390,h.width-25)
     );
   }
