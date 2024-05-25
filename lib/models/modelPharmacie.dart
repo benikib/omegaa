@@ -7,11 +7,11 @@ import 'baseDeDonnee/BaseDeDonnee.dart';
 class ModelPharmacie  {
   late   int ? id_pharmacie;
   String nom_pharmacie;
-  String commune;
-  String ville;
-  String adresseSup;
-  String  numeroPhone;
-  String mot_de_passe;
+  String commune="";
+  String ville="";
+  String adresseSup="";
+  String numeroPhone="";
+  String mot_de_passe="";
   String login;
 
   String nomTable="pharmacie";

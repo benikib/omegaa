@@ -121,7 +121,7 @@ class EnregistrementMedicamentState extends State<EnregistrementMedicament> {
                 "siro",
                 "Ingectable"
               ],
-              colorBordure: Colors.white
+              colorBordure: Colors.white,
           ).lancer(),
           IconEnr(width, Icons.add)
         ]).lancer(),
