@@ -7,7 +7,7 @@ import '../componentGenerale/Combobox.dart';
 import '../componentGenerale/InputCostom.dart';
 import '../componentGenerale/entete.dart';
 import '../leyouts/base.dart';
-
+import '../componentGenerale/messageFlache.dart';
 
 class pageEnregistrement extends StatefulWidget {
   static String nom_pharmacie="";
@@ -18,11 +18,14 @@ class pageEnregistrement extends StatefulWidget {
   static String mot_de_passe="";
   static String mot_de_passeConf="";
   static String login="";
+
   @override
   State<pageEnregistrement> createState() => pageEnregistrementState();
 }
 class pageEnregistrementState extends State<pageEnregistrement> {
   @override
+  var attente=false;
+  Color colorConnect=Colors.white24;
   Widget build(BuildContext context) {
     var h=MediaQuery.of(context).size;
     double largInp=h.width-18;
@@ -62,7 +65,7 @@ class pageEnregistrementState extends State<pageEnregistrement> {
                       couleur: colorInput,
 
                   ).lancer(),
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
+                  InputCostom(lar:longInp,couleurBorder: colorConnect,long:largInp,fonctions: (val){
                     pageEnregistrement.mot_de_passe=val;
                   },
                       value: "mot de passe",
@@ -71,17 +74,36 @@ class pageEnregistrementState extends State<pageEnregistrement> {
                       estcache: true
                   ).lancer(),
 
-                  ButtonCostom("Créer le compte",colorButton,(){
-                    Controler_pharmacie(context).Enregistrer(
+                  ButtonCostom("creer un compte",attente:(attente==true)?true:false,colorButton,()async{
+
+                  setState(()async
+                  {
+                    attente=true;
+                    List<dynamic> v = await Controler_pharmacie(context).Enregistrer(
                         pageEnregistrement.nom_pharmacie,
                         pageEnregistrement.ville,pageEnregistrement.commune,
-                      pageEnregistrement.adresseSup,pageEnregistrement.telephone,pageEnregistrement.mot_de_passe,pageEnregistrement.login);
+                        pageEnregistrement.adresseSup,pageEnregistrement.telephone,pageEnregistrement.mot_de_passe,pageEnregistrement.login);
+
+                    if(v[1]==0){
+                      setState(() {
+                        colorConnect=Colors.red;
+                        attente=false;
+                        MessageFlache(message: v[0]);
+
+
+                      });
+
+                    }else{
+                      MessageFlache(message: "Vous êtes connecté");
+                    }
+                  });
 
                   },rad: 9).lancer()
                 ],
                 tailleT: 45
               )
             ],
+
           ) ,
           child: []
         ).lancer(h.height-270,h.width-25),

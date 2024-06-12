@@ -44,8 +44,8 @@ class Base {
       Container(height: 145, color: Color.fromRGBO(50, 190, 166, 1)),
       SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.only(top:11),
-              height: 660,
+            margin: EdgeInsets.only(top:2),
+
 
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
