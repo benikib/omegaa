@@ -66,13 +66,13 @@ class pageAuthentificationState extends State<pageAuthentificationPharma> {
             content:blockAuth(
               "Authentifiez-vous",
                 blockInt(
-                    InputCostom(lar:longInp,long:largInp,couleurBorder: colorConnect,fonctions: (v){
+                    InputCostom(lar:longInp,icons: Icon (Icons.person),long:largInp,couleurBorder: colorConnect,fonctions: (v){
                       pageAuthentificationPharma.login=v;
                     },
                         value: "Entrez le login ",
                         couleur:colorInput
                     ).lancer(),
-                    InputCostom(lar:longInp,long:largInp,couleurBorder: colorConnect,fonctions: (v){
+                    InputCostom(lar:longInp,icons: Icon (Icons.lock),long:largInp,couleurBorder: colorConnect,fonctions: (v){
                       pageAuthentificationPharma.password=v;
                     },
                         value: "Entrez le mot de passe ",

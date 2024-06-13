@@ -26,6 +26,7 @@ class pageEnregistrementState extends State<pageEnregistrement> {
   @override
   var attente=false;
   Color colorConnect=Colors.white24;
+  Color colorChamps=Colors.white24;
   Widget build(BuildContext context) {
     var h=MediaQuery.of(context).size;
     double largInp=h.width-18;
@@ -49,7 +50,7 @@ class pageEnregistrementState extends State<pageEnregistrement> {
               blockEnregistrement(
                 "Créer un compte pharmacie ",
                 [
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
+                  InputCostom(lar:longInp,icons: Icon(Icons.home),couleurBorder: colorChamps,long:largInp,fonctions: (val){
                     pageEnregistrement.nom_pharmacie=val;
                   },
                       value: "Nom du pharmacie",
@@ -58,7 +59,7 @@ class pageEnregistrementState extends State<pageEnregistrement> {
                   ).lancer(),
 
 
-                  InputCostom(lar:longInp,long:largInp,fonctions: (val){
+                  InputCostom(lar:longInp,icons: Icon(Icons.person),couleurBorder: colorChamps,long:largInp,fonctions: (val){
                     pageEnregistrement.login=val;
                   },
                       value: "Email ou Téléphone",
@@ -79,23 +80,29 @@ class pageEnregistrementState extends State<pageEnregistrement> {
                   setState(()async
                   {
                     attente=true;
-                    List<dynamic> v = await Controler_pharmacie(context).Enregistrer(
+                    Map<dynamic,dynamic> connexion= await Controler_pharmacie(context).Enregistrer(
                         pageEnregistrement.nom_pharmacie,
                         pageEnregistrement.ville,pageEnregistrement.commune,
                         pageEnregistrement.adresseSup,pageEnregistrement.telephone,pageEnregistrement.mot_de_passe,pageEnregistrement.login);
 
-                    if(v[1]==0){
+                    if(connexion["status"]==101){
                       setState(() {
-                        colorConnect=Colors.red;
+                       colorChamps= colorConnect=Colors.red;
                         attente=false;
-                        MessageFlache(message: v[0]);
-
-
                       });
 
-                    }else{
-                      MessageFlache(message: "Vous êtes connecté");
                     }
+                   else if(connexion["status"]==102){
+                    setState(() {
+                    colorConnect=Colors.red;
+                    attente=false;
+                    });
+
+                  }
+                      else{
+
+                    }
+                    MessageFlache(message: connexion["message"]);
                   });
 
                   },rad: 9).lancer()

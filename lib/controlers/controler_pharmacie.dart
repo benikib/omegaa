@@ -17,17 +17,18 @@ class Controler_pharmacie{
     navigation(context,pageEnregistrement());
   }
 
-  Future<List<dynamic>> Enregistrer(nom_pharmacie,ville,commune,
+  Future<Map<dynamic,dynamic>> Enregistrer(nom_pharmacie,ville,commune,
       adresseSup,numeroPhone,mot_de_passe,login)async{
 
       RegExp hasSpecialChar = RegExp(r'[!@#$%^&*(),.?":{}|<>]');
-    if (mot_de_passe.length != 8 || !hasSpecialChar.hasMatch(mot_de_passe) ) {
-
-      return ["le mot de passe doit avoir 8  caractere  et au moins un  caractere  special  ",0];
+      if (nom_pharmacie =="" || mot_de_passe == "" || login == ""){
+        return {"message" : "remplir tout les champs ", "status": 101 };
+      }
+    if (mot_de_passe.length <= 8 || !hasSpecialChar.hasMatch(mot_de_passe) ) {
+      print(hasSpecialChar.hasMatch(mot_de_passe));
+      return {"message" : " Le mot de passe doit avoir  Un caractere special et au moins 8 caractere", "status": 102 };
 
     }
-
-
 
 
 
@@ -38,7 +39,7 @@ class Controler_pharmacie{
         adresseSup,numeroPhone,mot_de_passe]);
     print(await ModelPharmacie.affId(2));
     navigation(context,pageAuthentificationPharma());
-    return ["connection ",1];
+    return  {"message" : "Connesion reussi ", "status": 0 };
   }
 
 

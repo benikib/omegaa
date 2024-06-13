@@ -12,6 +12,7 @@ class InputCostom {
   var estcache = false;
   var exp=RegExp(r'^[A-Za-z]+$');
   var isvalid=true;
+  var icons;
 
 
 
@@ -27,7 +28,8 @@ class InputCostom {
     this.estcache = false,
     this.couleurBorder = Colors.white24,
     this.elevation = 0,
-    this.valeurInterne=""
+    this.valeurInterne="",
+    this.icons
 
 
   });
@@ -74,7 +76,7 @@ class InputCostom {
                   decoration: InputDecoration(
                     fillColor: Colors.blue,
                     errorText: isvalid?null:"error",
-
+                    prefixIcon:this.icons,
                     hintText: this.value,
                     border:OutlineInputBorder(
                         borderSide: BorderSide.none,
